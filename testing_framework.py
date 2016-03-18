@@ -7,6 +7,9 @@ class TestingFramework:
     def __init__(self):
         pass
 
+    def run_all(self):
+        pass
+
     def _cross_val_score(self, classifier, data, target, cv):
         """Runs a cross validation test with a provided number of folds.
 
