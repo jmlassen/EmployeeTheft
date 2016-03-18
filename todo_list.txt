@@ -1,1 +1,4 @@
 TODO List:
+- create code to convert receipts into objects -> Joel
+- create testing framework -> Grant
+-
