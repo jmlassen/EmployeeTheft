@@ -7,7 +7,7 @@ class TestingFramework:
     def __init__(self):
         pass
 
-    def _cross_val_score(classifier, data, target, cv):
+    def _cross_val_score(self, classifier, data, target, cv):
         """Runs a cross validation test with a provided number of folds.
 
         :param classifier: The classifier we want to test, must have 'fit' and 'predict' methods implemented
