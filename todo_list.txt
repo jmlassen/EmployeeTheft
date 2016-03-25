@@ -1,4 +1,5 @@
 TODO List:
 - create code to convert receipts into objects -> Joel
+- pull the sales records -> Joel
 - create testing framework -> Grant
--
+- create code to preprocess (naive bayes, neural network, svm, decision tree) -> Andrew
