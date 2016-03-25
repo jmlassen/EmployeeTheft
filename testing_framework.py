@@ -4,11 +4,16 @@ from sklearn.metrics import accuracy_score
 
 
 class TestingFramework:
-    def __init__(self):
-        pass
+    def __init__(self, classifiers, classifiers_preprocessors):
+        self.classifiers = classifiers
+        self.classifiers_preprocessors = classifiers_preprocessors
 
-    def run_all(self):
-        pass
+    def run_all(self, data_set, cv):
+        overall_results = []
+        for i in range(self.calssifiers.__len__()):
+            self.classifiers_preprocessors[i]()
+            overall_results.append(self._cross_val_score(self.classifiers[i], data_set.data, data_set.target, cv))
+        return overall_results
 
     def _cross_val_score(self, classifier, data, target, cv):
         """Runs a cross validation test with a provided number of folds.
