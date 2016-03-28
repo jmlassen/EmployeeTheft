@@ -1,5 +1,5 @@
 class Receipt:
-    def __init__(self, lines, cashier, transaction_start_time, transaction_location, transaction_number,
+    def __init__(self, cashier, transaction_start_time, transaction_location, transaction_number,
                  customer_entered, register_number, transaction_total, tenders):
         self.cashier = cashier
         self.transaction_start_time = transaction_start_time
