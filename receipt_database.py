@@ -23,8 +23,8 @@ class ReceiptDatabase:
         """Loads receipts on disk into memory.
         """
         receipts = []
-        receipt_filenames = listdir(RECEIPT_DIRECTORY)
-        for filename in receipt_filenames:
+        receipt_file_names = listdir(RECEIPT_DIRECTORY)
+        for filename in receipt_file_names:
             receipt_filename = "{}{}".format(RECEIPT_DIRECTORY, filename)
             receipt_lines = self._get_receipt_lines(receipt_filename)
             receipt = self._objectify_receipt_from_lines(receipt_lines)
@@ -43,6 +43,7 @@ class ReceiptDatabase:
     def _objectify_receipt_from_lines(self, receipt_lines):
         """Transforms receipt lines into an object.
         """
+        # Create variables that will hold the different parts of our receipt.
         for line in receipt_lines:
             pass
         return Receipt()
