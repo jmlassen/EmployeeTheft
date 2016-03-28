@@ -43,10 +43,19 @@ class ReceiptDatabase:
     def _objectify_receipt_from_lines(self, receipt_lines):
         """Transforms receipt lines into an object.
         """
-        # Create variables that will hold the different parts of our receipt.
+        cashier = ""
+        transaction_start_time = None
+        transaction_location = None
+        transaction_number = ""
+        customer_entered = False
+        register_number = 0
+        transaction_total = 0.0
+        tenders = []
         for line in receipt_lines:
             pass
-        return Receipt()
+        return Receipt(cashier, transaction_start_time, transaction_location, transaction_number, customer_entered,
+                       register_number, transaction_total, tenders)
+
 
 
 if __name__ == '__main__':
