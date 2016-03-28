@@ -1,6 +1,5 @@
-import os
+import re
 from os import listdir
-
 from receipt import Receipt
 
 RECEIPT_DIRECTORY = "data/"
@@ -11,6 +10,15 @@ VOID_RECEIPT_PATTERN = "VOID\s+Subtotal\sVoid\s+V"
 
 
 class ReceiptDatabase:
+    def __init__(self):
+        """Initialize regex patterns to be used when loading receipts. This should probably not be done this way, but
+        I do not care that much to implement it differently.
+        """
+        self.customer_pattern = re.compile(CUSTOMER_PATTERN)
+        self.receipt_total_pattern = re.compile(RECEIPT_TOTAL_PATTERN)
+        self.tender_type_pattern = re.compile(TENDER_TYPE_PATTERN)
+        self.void_receipt_pattern = re.compile(VOID_RECEIPT_PATTERN)
+
     def load_receipts(self):
         """Loads receipts on disk into memory.
         """
@@ -20,6 +28,7 @@ class ReceiptDatabase:
             receipt_filename = "{}{}".format(RECEIPT_DIRECTORY, filename)
             receipt_lines = self._get_receipt_lines(receipt_filename)
             receipt = self._objectify_receipt_from_lines(receipt_lines)
+            receipts.append(receipt)
         return receipts
 
     def _get_receipt_lines(self, receipt_filename):
@@ -34,7 +43,8 @@ class ReceiptDatabase:
     def _objectify_receipt_from_lines(self, receipt_lines):
         """Transforms receipt lines into an object.
         """
-
+        for line in receipt_lines:
+            pass
         return Receipt()
 
 
