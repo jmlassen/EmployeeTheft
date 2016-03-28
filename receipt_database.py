@@ -8,8 +8,7 @@ class ReceiptDatabase:
         """Loads receipts on disk into memory.
         """
         receipts = []
-        receipt_filenames = []
-        print(listdir(RECEIPT_DIRECTORY))
+        receipt_filenames = listdir(RECEIPT_DIRECTORY)
 
 
 if __name__ == '__main__':
