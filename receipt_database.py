@@ -4,6 +4,10 @@ from os import listdir
 from receipt import Receipt
 
 RECEIPT_DIRECTORY = "data/"
+CUSTOMER_PATTERN = ".*Valued\sMember\s##\d{4}.*"
+RECEIPT_TOTAL_PATTERN = "\*\*\*\sTotal\s*-\$\d{1,4}\."
+TENDER_TYPE_PATTERN = "\w+\s+\-{0,1}\$\d+\.\d+"
+VOID_RECEIPT_PATTERN = "VOID\s+Subtotal\sVoid\s+V"
 
 
 class ReceiptDatabase:
@@ -30,6 +34,7 @@ class ReceiptDatabase:
     def _objectify_receipt_from_lines(self, receipt_lines):
         """Transforms receipt lines into an object.
         """
+
         return Receipt()
 
 
