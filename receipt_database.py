@@ -57,6 +57,5 @@ class ReceiptDatabase:
                        register_number, transaction_total, tenders)
 
 
-
 if __name__ == '__main__':
     receipts = ReceiptDatabase().load_receipts()
