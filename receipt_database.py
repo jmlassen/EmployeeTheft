@@ -27,6 +27,7 @@ class ReceiptDatabase:
     def load_receipts(self):
         """Loads receipts on disk into memory.
         """
+        # Getting error there is already a variable named receipts in global scope?
         receipts = []
         receipt_file_names = listdir(RECEIPT_DIRECTORY)
         for filename in receipt_file_names:
