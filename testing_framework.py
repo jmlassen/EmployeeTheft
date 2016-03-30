@@ -8,10 +8,15 @@ class TestingFramework:
         self.classifiers = classifiers
         self.classifiers_preprocessors = classifiers_preprocessors
 
+    def run(self, data_set, cv, classifier_index):
+        results = []
+        self.classifiers_preprocessors[classifier_index](data_set)
+        return results.append(self._cross_val_score(self.classifiers[classifier_index], data_set.data, data_set.target, cv))
+    
     def run_all(self, data_set, cv):
         overall_results = []
         for i in range(self.calssifiers.__len__()):
-            self.classifiers_preprocessors[i]()
+            self.classifiers_preprocessors[i](data_set)
             overall_results.append(self._cross_val_score(self.classifiers[i], data_set.data, data_set.target, cv))
         return overall_results
 
