@@ -15,9 +15,11 @@ class TestingFramework:
 
     def run_all(self, data_set, cv):
         overall_results = []
-        for i in range(self.calssifiers.__len__()):
+        for i in range(self.classifiers.__len__()):
             self.classifiers_preprocessors[i](data_set)
-            overall_results.append(self._cross_val_score(self.classifiers[i], data_set.data, data_set.target, cv))
+            result = self._cross_val_score(self.classifiers[i], data_set.data, data_set.target, cv)
+            result = np.mean(result)
+            overall_results.append(result)
         return overall_results
 
     def predict(self, data_point, classifier_index=0):
