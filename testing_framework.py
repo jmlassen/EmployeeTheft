@@ -12,13 +12,16 @@ class TestingFramework:
         results = []
         self.classifiers_preprocessors[classifier_index](data_set)
         return results.append(self._cross_val_score(self.classifiers[classifier_index], data_set.data, data_set.target, cv))
-    
+
     def run_all(self, data_set, cv):
         overall_results = []
         for i in range(self.calssifiers.__len__()):
             self.classifiers_preprocessors[i](data_set)
             overall_results.append(self._cross_val_score(self.classifiers[i], data_set.data, data_set.target, cv))
         return overall_results
+
+    def predict(self, data_point, classifier_index=0):
+        return self.classifiers[classifier_index].predict(data_point)[0]
 
     def _cross_val_score(self, classifier, data, target, cv):
         """Runs a cross validation test with a provided number of folds.
