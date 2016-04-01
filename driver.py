@@ -5,24 +5,27 @@ from sklearn.svm import SVC
 from testing_framework import TestingFramework
 
 class Driver:
+    classifiers = {
+        "Naive Bayes": GaussianNB(),
+        "Support Vector Machines": SVC(),
+        "K Nearest Neighbors": KNeighborsClassifier()
+    }
+    
     def __init__(self):
         pass
 
-    def run_accuracy_test(self):
-        # Create a list of classifiers
-        nb = GaussianNB()
-        svm = SVC()
-        knc = KNeighborsClassifier()
-
-        classifiers = [nb, svm, knc]
-
+    def run_accuracy_test(self, data_set):
         # Create testing framework
-        tf = TestingFramework(classifiers)
+        tf = TestingFramework(self.classifiers)
 
         # Run all classifiers
+        accuracies = tf.run_all(data_set, 7)
 
         # Show accuracy of each classifier
-        pass
+        index = 0
+        for key, value in self.classifiers.items():
+            print(key + " Accuracy: {}%".format(accuracies[index]))
+            index += 1
 
 
 def main():
