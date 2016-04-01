@@ -83,18 +83,17 @@ class ReceiptDatabase:
             if self.register_transaction_pattern.match(line):
                 line_split = line.split(' ')
                 register_number = int(line_split[2])
+                transaction_location = int(register_number / 100)
                 cashier = int(line_split[6])
-                transaction_number = line_split[9]
-            # Check line for timestamp
-            if self.timestamp_pattern.match(line):
-                transaction_time = line
+                # transaction_number = line_split[9]
         # Quick workaround for the tender issue.
         if len(tenders) > 1 and "CASH" in tenders:
             tenders = "CASH"
         elif len(tenders) == 1:
             tenders = tenders[0]
-        return [cashier, transaction_time, transaction_location, transaction_number, customer_entered,
-                register_number, transaction_total, tenders]
+        else:
+            return None
+        return [cashier, transaction_location, customer_entered, register_number, transaction_total, tenders]
 
 
 if __name__ == '__main__':
