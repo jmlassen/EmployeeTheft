@@ -1,13 +1,14 @@
 import re
 from os import listdir
 from receipt import Receipt
+from receipt_data_container import ReceiptDataContainer
 
 RECEIPT_DIRECTORY = "data/"
 CUSTOMER_PATTERN = ".*Valued\sMember\s##\d{4}.*"
 RECEIPT_TOTAL_PATTERN = "\*\*\*\sTotal\s*-\$\d{1,4}\."
 TENDER_TYPE_PATTERN = "\w+\s+\-{0,1}\$\d+\.\d+"
 VOID_RECEIPT_PATTERN = "VOID\s+Subtotal\sVoid\s+V"
-REGISTER_TRANSACTION_PATTERN = "Reg\D+\d{3}\s+Csh\D+\d{3}\D+\d{8}"
+REGISTER_TRANSACTION_PATTERN = "Reg\s#"
 TIMESTAMP_PATTERN = "\w+,\s\w+\s\d+,\s\d+\s\d+:\d+:\d+"
 RECEIPT_CHANGE_TENDER_TEXT = "Change"
 
@@ -29,6 +30,7 @@ class ReceiptDatabase:
         """
         # Getting error there is already a variable named receipts in global scope?
         receipts = []
+        target = []
         receipt_file_names = listdir(RECEIPT_DIRECTORY)
         for filename in receipt_file_names:
             receipt_filename = "{}{}".format(RECEIPT_DIRECTORY, filename)
@@ -37,7 +39,8 @@ class ReceiptDatabase:
             # Make sure the receipt was not voided
             if receipt is not None:
                 receipts.append(receipt)
-        return receipts
+                target.append('fraudulent')
+        return ReceiptDataContainer(receipts, target)
 
     def _get_receipt_lines(self, receipt_filename):
         """Reads a receipt file into an array of strings.
@@ -53,7 +56,7 @@ class ReceiptDatabase:
         """Transforms receipt lines into an object.
         """
         cashier = None
-        transaction_start_time = None
+        transaction_time = None
         transaction_location = None
         transaction_number = ""
         customer_entered = False
@@ -84,9 +87,14 @@ class ReceiptDatabase:
                 transaction_number = line_split[9]
             # Check line for timestamp
             if self.timestamp_pattern.match(line):
-                transaction_start_time = line
-        return Receipt(cashier, transaction_start_time, transaction_location, transaction_number, customer_entered,
-                       register_number, transaction_total, tenders)
+                transaction_time = line
+        # Quick workaround for the tender issue.
+        if len(tenders) > 1 and "CASH" in tenders:
+            tenders = "CASH"
+        elif len(tenders) == 1:
+            tenders = tenders[0]
+        return [cashier, transaction_time, transaction_location, transaction_number, customer_entered,
+                register_number, transaction_total, tenders]
 
 
 if __name__ == '__main__':
