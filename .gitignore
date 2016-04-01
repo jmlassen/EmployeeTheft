@@ -45,3 +45,6 @@ crashlytics-build.properties
 fabric.properties
 
 data/*
+
+# Ignore the raw receipt files
+utilities/*.txt
