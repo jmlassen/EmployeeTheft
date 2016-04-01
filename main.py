@@ -29,7 +29,7 @@ def main():
         receipt = rd._objectify_receipt_from_lines(lines)
 
         # Run test
-        prediction = gnb.predict(receipt)[0]
+        prediction = dtc.predict(receipt)[0]
 
         # Show prediction
         print("This receipt is {}".format(prediction))
