@@ -3,14 +3,20 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 
 from testing_framework import TestingFramework
+from receipt_database import ReceiptDatabase
 
 
 class Driver:
-    classifiers = {
-        "Naive Bayes": GaussianNB(),
-        "Support Vector Machines": SVC(),
-        "K Nearest Neighbors": KNeighborsClassifier()
-    }
+    classifiers_names = [
+        "Naive Bayes",
+        "Support Vector Machines",
+        "K Nearest Neighbors"
+    ]
+    classifiers = [
+        GaussianNB(),
+        SVC(),
+        KNeighborsClassifier()
+    ]
 
     def __init__(self):
         pass
@@ -23,14 +29,19 @@ class Driver:
         accuracies = tf.run_all(data_set, 7)
 
         # Show accuracy of each classifier
-        index = 0
-        for key, value in self.classifiers.items():
-            print(key + " Accuracy: {}%".format(accuracies[index]))
-            index += 1
+        for index in range(0, len(self.classifiers_names)):
+            print(self.classifiers_names[index] + " Accuracy: {}%".format(accuracies[index]))
 
 
 def main():
-    pass
+    # Create Receipt_Database
+    rd = ReceiptDatabase()
+
+    # Load receipts
+    rdc = rd.load_receipts()
+
+    Driver().run_accuracy_test(rdc)
+
 
 if __name__ == "__main__":
     main()
