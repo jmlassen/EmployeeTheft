@@ -1,4 +1,4 @@
-from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
 from receipt_database import ReceiptDatabase
 
 
@@ -12,10 +12,10 @@ def main():
     rdc = rd.load_receipts()
 
     # Create Classifier
-    gnb = GaussianNB()
+    dtc = DecisionTreeClassifier()
 
     # Train
-    gnb.fit(rdc.data, rdc.target)
+    dtc.fit(rdc.data, rdc.target)
 
     while True:
         # Provide a user receipt file

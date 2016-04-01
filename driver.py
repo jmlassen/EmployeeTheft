@@ -4,13 +4,14 @@ from sklearn.svm import SVC
 
 from testing_framework import TestingFramework
 
+
 class Driver:
     classifiers = {
         "Naive Bayes": GaussianNB(),
         "Support Vector Machines": SVC(),
         "K Nearest Neighbors": KNeighborsClassifier()
     }
-    
+
     def __init__(self):
         pass
 
