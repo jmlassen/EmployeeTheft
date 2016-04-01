@@ -1,4 +1,5 @@
 TODO List:
 - create code to preprocess (naive bayes, neural network, svm, decision tree) -> Andrew, Grant
-- pulling non fradaulent receipts from the master database -> Joel
 - modify receipt_database to instead return receipt_data_container -> Joel
+- Create presentation -> Andrew
+- Finish Final Draft -> Andrew
