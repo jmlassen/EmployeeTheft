@@ -4,19 +4,16 @@ from sklearn.metrics import accuracy_score
 
 
 class TestingFramework:
-    def __init__(self, classifiers, classifiers_preprocessors):
+    def __init__(self, classifiers):
         self.classifiers = classifiers
-        self.classifiers_preprocessors = classifiers_preprocessors
 
     def run(self, data_set, cv, classifier_index):
         results = []
-        self.classifiers_preprocessors[classifier_index](data_set)
         return results.append(self._cross_val_score(self.classifiers[classifier_index], data_set.data, data_set.target, cv))
 
     def run_all(self, data_set, cv):
         overall_results = []
         for i in range(self.classifiers.__len__()):
-            self.classifiers_preprocessors[i](data_set)
             result = self._cross_val_score(self.classifiers[i], data_set.data, data_set.target, cv)
             result = np.mean(result)
             overall_results.append(result)
