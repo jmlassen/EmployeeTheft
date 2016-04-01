@@ -2,6 +2,8 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 
+from testing_framework import TestingFramework
+
 class Driver:
     def __init__(self):
         pass
@@ -12,9 +14,10 @@ class Driver:
         svm = SVC()
         knc = KNeighborsClassifier()
 
-        # Create a list of classifier preprocessor functions
+        classifiers = [nb, svm, knc]
 
         # Create testing framework
+        tf = TestingFramework(classifiers)
 
         # Run all classifiers
 
