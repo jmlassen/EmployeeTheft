@@ -1,6 +1,6 @@
 import re
 from os import listdir
-from receipt import Receipt
+import numpy as np
 from receipt_data_container import ReceiptDataContainer
 
 RECEIPT_DIRECTORY = "data/"
@@ -40,7 +40,7 @@ class ReceiptDatabase:
             if receipt is not None:
                 receipts.append(receipt)
                 target.append('fraudulent')
-        return ReceiptDataContainer(receipts, target)
+        return ReceiptDataContainer(np.array(receipts), np.array(target))
 
     def _get_receipt_lines(self, receipt_filename):
         """Reads a receipt file into an array of strings.
