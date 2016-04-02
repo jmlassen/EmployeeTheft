@@ -30,12 +30,13 @@ class ReceiptDatabase:
 
     def load_receipts(self, n_duplicate=N_DUPLICATE):
         """Loads receipts on disk into memory.
+        :type n_duplicate: int
+        :param n_duplicate: The number of duplicate fraudulent receipts to add.
         """
         receipts = []
         target = []
         self._load_receipts_in_directory(FRAUDULENT_RECEIPT_DIRECTORY, 'fraudulent', receipts, target)
         self._bloat_with_duplicate_records(receipts, target, n_duplicate)
-
         self._load_receipts_in_directory(LEGITIMATE_RECEIPT_DIRECTORY, 'legitimate', receipts, target)
         return ReceiptDataContainer(np.array(receipts), np.array(target))
 
@@ -103,7 +104,9 @@ class ReceiptDatabase:
         return [customer_entered, register_number, transaction_total, tenders]
 
     def _bloat_with_duplicate_records(self, receipts, target, n_duplicate):
-        # Trying to force algorithm to predict fraudulent more often
+        """Appends n_duplicate random receipts to the list of receipts. This is done to give more weight to the
+        fraudulent records.
+        """
         for _ in range(n_duplicate):
             index = random.randint(0, len(receipts) - 1)
             receipts.append(receipts[index])
