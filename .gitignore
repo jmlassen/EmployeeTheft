@@ -44,7 +44,9 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-data/*
+data/fraudulent_receipts/*
+data/legitimate_receipts/*
+
 
 # Ignore the raw receipt files
 utilities/legitimate_receipts/*.txt
