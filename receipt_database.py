@@ -2,6 +2,7 @@ import re
 from os import listdir
 import numpy as np
 from receipt_data_container import ReceiptDataContainer
+import random
 
 FRAUDULENT_RECEIPT_DIRECTORY = "data/fraudulent_receipts/"
 LEGITIMATE_RECEIPT_DIRECTORY = "data/legitimate_receipts/"
@@ -12,6 +13,7 @@ VOID_RECEIPT_PATTERN = "VOID\s+Subtotal\sVoid\s+V"
 REGISTER_TRANSACTION_PATTERN = "Reg\s#"
 TIMESTAMP_PATTERN = "\w+,\s\w+\s\d+,\s\d+\s\d+:\d+:\d+"
 RECEIPT_CHANGE_TENDER_TEXT = "Change"
+N_DUPLICATE = 0
 
 
 class ReceiptDatabase:
@@ -26,12 +28,14 @@ class ReceiptDatabase:
         self.timestamp_pattern = re.compile(TIMESTAMP_PATTERN)
         self.register_transaction_pattern = re.compile(REGISTER_TRANSACTION_PATTERN)
 
-    def load_receipts(self):
+    def load_receipts(self, n_duplicate=N_DUPLICATE):
         """Loads receipts on disk into memory.
         """
         receipts = []
         target = []
         self._load_receipts_in_directory(FRAUDULENT_RECEIPT_DIRECTORY, 'fraudulent', receipts, target)
+        self._bloat_with_duplicate_records(receipts, target, n_duplicate)
+
         self._load_receipts_in_directory(LEGITIMATE_RECEIPT_DIRECTORY, 'legitimate', receipts, target)
         return ReceiptDataContainer(np.array(receipts), np.array(target))
 
@@ -97,6 +101,13 @@ class ReceiptDatabase:
         else:
             return None
         return [transaction_location, customer_entered, register_number, transaction_total, tenders]
+
+    def _bloat_with_duplicate_records(self, receipts, target, n_duplicate):
+        # Trying to force algorithm to predict fraudulent more often
+        for _ in range(N_DUPLICATE):
+            index = random.randint(0, len(receipts) - 1)
+            receipts.append(receipts[index])
+            target.append('fraudulent')
 
 
 if __name__ == '__main__':
