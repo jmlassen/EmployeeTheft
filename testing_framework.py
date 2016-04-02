@@ -8,13 +8,15 @@ def preprocess(data_set):
     for point in data_set.data:
         point[-1] = tenders.index(point[-1])
 
+
 class TestingFramework:
     def __init__(self, classifiers):
         self.classifiers = classifiers
 
     def run(self, data_set, cv, classifier_index):
         results = []
-        return results.append(self._cross_val_score(self.classifiers[classifier_index], data_set.data, data_set.target, cv))
+        return results.append(
+            self._cross_val_score(self.classifiers[classifier_index], data_set.data, data_set.target, cv))
 
     def run_all(self, data_set, cv):
 
@@ -49,5 +51,17 @@ class TestingFramework:
             classifier.fit(train_data, train_target)
             prediction = classifier.predict(data[start_index:end_index])
             accuracy = accuracy_score(target[start_index:end_index], prediction)
+            self._print_confusion_matrix(prediction, target[start_index:end_index])
             results.append(accuracy)
         return np.array(results)
+
+    def _print_confusion_matrix(self, prediction, target):
+        matrix = {}
+        for i in range(len(prediction)):
+            if target[i] not in matrix:
+                matrix[target[i]] = {}
+            if prediction[i] not in matrix[target[i]]:
+                matrix[target[i]][prediction[i]] = 1
+            else:
+                matrix[target[i]][prediction[i]] += 1
+        print(matrix)
