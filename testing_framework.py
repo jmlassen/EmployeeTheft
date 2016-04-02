@@ -21,9 +21,9 @@ class TestingFramework:
     def run_all(self, data_set, cv):
 
         overall_results = []
-        for i in range(self.classifiers.__len__()):
+        for classifier in self.classifiers:
             preprocess(data_set)
-            result = self._cross_val_score(self.classifiers[i], data_set.data, data_set.target, cv)
+            result = self._cross_val_score(classifier, data_set.data, data_set.target, cv)
             result = np.mean(result)
             overall_results.append(result)
         return overall_results
@@ -51,6 +51,7 @@ class TestingFramework:
             classifier.fit(train_data, train_target)
             prediction = classifier.predict(data[start_index:end_index])
             accuracy = accuracy_score(target[start_index:end_index], prediction)
+            # Calculate and print the confusion matrix
             self._print_confusion_matrix(prediction, target[start_index:end_index])
             results.append(accuracy)
         return np.array(results)
