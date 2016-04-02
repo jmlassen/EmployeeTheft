@@ -24,12 +24,12 @@ class Driver:
     def __init__(self):
         pass
 
-    def run_accuracy_test(self, data_set):
+    def run_accuracy_test(self):
         # Create testing framework
         testing_framework = TestingFramework(self.classifiers)
 
         # Run all classifiers
-        accuracies = testing_framework.run_optimization_test(data_set)
+        accuracies = testing_framework.run_optimization_test()
 
         # Show accuracy of each classifier
         for index in range(0, len(self.classifiers_names)):
@@ -38,12 +38,12 @@ class Driver:
 
 def main():
     # Create Receipt_Database
-    rd = ReceiptDatabase()
+    # rd = ReceiptDatabase()
 
     # Load receipts
-    rdc = rd.load_receipts()
+    # rdc = rd.load_receipts()
 
-    Driver().run_accuracy_test(rdc)
+    Driver().run_accuracy_test()
 
 
 if __name__ == "__main__":
