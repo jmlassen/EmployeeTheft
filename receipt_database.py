@@ -32,7 +32,7 @@ class ReceiptDatabase:
         receipts = []
         target = []
         self._load_receipts_in_directory(FRAUDULENT_RECEIPT_DIRECTORY, 'fraudulent', receipts, target)
-        self._load_receipts_in_directory(LEGITIMATE_RECEIPT_DIRECTORY, 'not-fraudulent', receipts, target)
+        self._load_receipts_in_directory(LEGITIMATE_RECEIPT_DIRECTORY, 'legitimate', receipts, target)
         return ReceiptDataContainer(np.array(receipts), np.array(target))
 
     def _load_receipts_in_directory(self, directory, label, receipts, target):
