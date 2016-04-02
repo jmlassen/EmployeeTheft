@@ -26,10 +26,10 @@ class Driver:
 
     def run_accuracy_test(self, data_set):
         # Create testing framework
-        tf = TestingFramework(self.classifiers)
+        testing_framework = TestingFramework(self.classifiers)
 
         # Run all classifiers
-        accuracies = tf.run_all(data_set, 7)
+        accuracies = testing_framework.run_optimization_test(data_set)
 
         # Show accuracy of each classifier
         for index in range(0, len(self.classifiers_names)):
