@@ -61,11 +61,12 @@ class ReceiptDatabase:
         return lines
 
     def _objectify_receipt_from_lines(self, receipt_lines):
-        """Transforms receipt lines into an object.
+        """Transforms receipt lines into an object. Purposely removes certain parameters that would unfairly sway
+        testing results.
         """
-        cashier = None
+        # cashier = None
         # transaction_time = None
-        transaction_location = None
+        # transaction_location = None
         # transaction_number = ""
         customer_entered = 0
         register_number = 0
@@ -91,8 +92,8 @@ class ReceiptDatabase:
             if self.register_transaction_pattern.match(line):
                 line_split = line.split(' ')
                 register_number = int(line_split[2]) %100
-                transaction_location = int(int(line_split[2]) / 100)
-                cashier = int(line_split[6])
+                # transaction_location = int(int(line_split[2]) / 100)
+                # cashier = int(line_split[6])
                 # transaction_number = line_split[9]
         # Quick workaround for the tender issue.
         if len(tenders) > 1 and "CASH" in tenders:
