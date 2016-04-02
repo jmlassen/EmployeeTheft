@@ -104,7 +104,7 @@ class ReceiptDatabase:
 
     def _bloat_with_duplicate_records(self, receipts, target, n_duplicate):
         # Trying to force algorithm to predict fraudulent more often
-        for _ in range(N_DUPLICATE):
+        for _ in range(n_duplicate):
             index = random.randint(0, len(receipts) - 1)
             receipts.append(receipts[index])
             target.append('fraudulent')
