@@ -32,8 +32,8 @@ class Driver:
         accuracies = testing_framework.run_optimization_test()
 
         # Show accuracy of each classifier
-        for index in range(0, len(self.classifiers_names)):
-            print(self.classifiers_names[index] + " Accuracy: {}".format(accuracies[index]))
+        # for index in range(0, len(self.classifiers_names)):
+        #     print(self.classifiers_names[index] + " Accuracy: {}".format(accuracies[index]))
 
 
 def main():
