@@ -96,7 +96,7 @@ class ReceiptDatabase:
             tenders = tenders[0]
         else:
             return None
-        return [cashier, transaction_location, customer_entered, register_number, transaction_total, tenders]
+        return [transaction_location, customer_entered, register_number, transaction_total, tenders]
 
 
 if __name__ == '__main__':

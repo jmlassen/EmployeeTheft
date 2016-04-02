@@ -8,12 +8,12 @@ from receipt_database import ReceiptDatabase
 
 class Driver:
     classifiers_names = [
-        "Naive Bayes",
+        # "Naive Bayes",
         "Support Vector Machines",
         "K Nearest Neighbors"
     ]
     classifiers = [
-        GaussianNB(),
+        # GaussianNB(),
         SVC(),
         KNeighborsClassifier()
     ]
