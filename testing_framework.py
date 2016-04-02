@@ -3,6 +3,11 @@ from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
 
 
+def preprocess(data_set):
+    tenders = list(np.unique(data_set.data[:, -1]))
+    for point in data_set.data:
+        point[-1] = tenders.index(point[-1])
+
 class TestingFramework:
     def __init__(self, classifiers):
         self.classifiers = classifiers
@@ -12,8 +17,10 @@ class TestingFramework:
         return results.append(self._cross_val_score(self.classifiers[classifier_index], data_set.data, data_set.target, cv))
 
     def run_all(self, data_set, cv):
+
         overall_results = []
         for i in range(self.classifiers.__len__()):
+            preprocess(data_set)
             result = self._cross_val_score(self.classifiers[i], data_set.data, data_set.target, cv)
             result = np.mean(result)
             overall_results.append(result)

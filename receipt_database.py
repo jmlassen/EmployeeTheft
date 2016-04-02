@@ -7,7 +7,7 @@ FRAUDULENT_RECEIPT_DIRECTORY = "data/fraudulent_receipts/"
 LEGITIMATE_RECEIPT_DIRECTORY = "data/legitimate_receipts/"
 CUSTOMER_PATTERN = ".*Valued\sMember\s##\d{4}.*"
 RECEIPT_TOTAL_PATTERN = "\*\*\*\sTotal\s*-\$\d{1,4}\."
-TENDER_TYPE_PATTERN = "\w+\s+\-{0,1}\$\d+\.\d+"
+TENDER_TYPE_PATTERN = "[A-Z]{2,5}\s+\-{0,1}\$\d+.\d+"
 VOID_RECEIPT_PATTERN = "VOID\s+Subtotal\sVoid\s+V"
 REGISTER_TRANSACTION_PATTERN = "Reg\s#"
 TIMESTAMP_PATTERN = "\w+,\s\w+\s\d+,\s\d+\s\d+:\d+:\d+"
@@ -62,7 +62,7 @@ class ReceiptDatabase:
         # transaction_time = None
         transaction_location = None
         # transaction_number = ""
-        customer_entered = False
+        customer_entered = 0
         register_number = 0
         transaction_total = 0.0
         tenders = []
@@ -72,7 +72,7 @@ class ReceiptDatabase:
                 return None
             # Check if line shows customer was entered
             if self.customer_pattern.match(line):
-                customer_entered = True
+                customer_entered = 1
             # Check if line is receipt total
             if self.receipt_total_pattern.match(line):
                 # Receipts are implied to have a negative total.
