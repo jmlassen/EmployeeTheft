@@ -2,12 +2,12 @@ from sklearn.tree import DecisionTreeClassifier
 from receipt_database import ReceiptDatabase
 import numpy as np
 
+
 def preprocess(data_set):
     tenders = list(np.unique(data_set.data[:, -1]))
-    print(tenders)
     for point in data_set.data:
         point[-1] = tenders.index(point[-1])
-        print(point)
+
 
 def main():
     cv = 7
@@ -34,7 +34,7 @@ def main():
             break
 
         # Format file
-        lines   = rd._get_receipt_lines(receipt_file)
+        lines = rd._get_receipt_lines(receipt_file)
         receipt = rd._objectify_receipt_from_lines(lines)
 
         # Run test
@@ -42,6 +42,7 @@ def main():
 
         # Show prediction
         print("This receipt is {}".format(prediction))
+
 
 if __name__ == '__main__':
     main()
