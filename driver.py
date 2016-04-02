@@ -29,7 +29,7 @@ class Driver:
         testing_framework = TestingFramework(self.classifiers)
 
         # Run all classifiers
-        accuracies = testing_framework.run_optimization_test()
+        testing_framework.run_optimization_test()
 
         # Show accuracy of each classifier
         # for index in range(0, len(self.classifiers_names)):
