@@ -3,7 +3,8 @@ from os import listdir
 import numpy as np
 from receipt_data_container import ReceiptDataContainer
 
-RECEIPT_DIRECTORY = "data/"
+FRAUDULENT_RECEIPT_DIRECTORY = "data/fraudulent_receipts/"
+LEGITIMATE_RECEIPT_DIRECTORY = "data/legitimate_receipts/"
 CUSTOMER_PATTERN = ".*Valued\sMember\s##\d{4}.*"
 RECEIPT_TOTAL_PATTERN = "\*\*\*\sTotal\s*-\$\d{1,4}\."
 TENDER_TYPE_PATTERN = "\w+\s+\-{0,1}\$\d+\.\d+"
@@ -28,19 +29,21 @@ class ReceiptDatabase:
     def load_receipts(self):
         """Loads receipts on disk into memory.
         """
-        # Getting error there is already a variable named receipts in global scope?
         receipts = []
         target = []
-        receipt_file_names = listdir(RECEIPT_DIRECTORY)
+        self._load_receipts_in_directory(FRAUDULENT_RECEIPT_DIRECTORY, 'fraudulent', receipts, target)
+        self._load_receipts_in_directory(LEGITIMATE_RECEIPT_DIRECTORY, 'not-fraudulent', receipts, target)
+        return ReceiptDataContainer(np.array(receipts), np.array(target))
+
+    def _load_receipts_in_directory(self, directory, label, receipts, target):
+        receipt_file_names = listdir(directory)
         for filename in receipt_file_names:
-            receipt_filename = "{}{}".format(RECEIPT_DIRECTORY, filename)
+            receipt_filename = "{}{}".format(directory, filename)
             receipt_lines = self._get_receipt_lines(receipt_filename)
             receipt = self._objectify_receipt_from_lines(receipt_lines)
-            # Make sure the receipt was not voided
             if receipt is not None:
                 receipts.append(receipt)
-                target.append('fraudulent')
-        return ReceiptDataContainer(np.array(receipts), np.array(target))
+                target.append(label)
 
     def _get_receipt_lines(self, receipt_filename):
         """Reads a receipt file into an array of strings.
@@ -56,9 +59,9 @@ class ReceiptDatabase:
         """Transforms receipt lines into an object.
         """
         cashier = None
-        transaction_time = None
+        # transaction_time = None
         transaction_location = None
-        transaction_number = ""
+        # transaction_number = ""
         customer_entered = False
         register_number = 0
         transaction_total = 0.0
@@ -97,4 +100,4 @@ class ReceiptDatabase:
 
 
 if __name__ == '__main__':
-    receipts = ReceiptDatabase().load_receipts()
+    ReceiptDatabase().load_receipts()
