@@ -1,6 +1,13 @@
 from sklearn.tree import DecisionTreeClassifier
 from receipt_database import ReceiptDatabase
+import numpy as np
 
+def preprocess(data_set):
+    tenders = list(np.unique(data_set.data[:, -1]))
+    print(tenders)
+    for point in data_set.data:
+        point[-1] = tenders.index(point[-1])
+        print(point)
 
 def main():
     cv = 7
@@ -10,6 +17,8 @@ def main():
 
     # Load receipts
     rdc = rd.load_receipts()
+
+    preprocess(rdc)
 
     # Create Classifier
     dtc = DecisionTreeClassifier()
