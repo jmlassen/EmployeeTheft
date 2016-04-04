@@ -91,7 +91,7 @@ class ReceiptDatabase:
             # Check if line is register cashier transaction
             if self.register_transaction_pattern.match(line):
                 line_split = line.split(' ')
-                register_number = int(line_split[2]) %100
+                register_number = int(line_split[2]) % 100
                 # transaction_location = int(int(line_split[2]) / 100)
                 # cashier = int(line_split[6])
                 # transaction_number = line_split[9]
